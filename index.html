@@ -77,11 +77,19 @@
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
         // Mobile device style: fill the whole browser client area with the game canvas:
-        window.addEventListener("orientationchange", function() {
-    if (window.orientation === 90 || window.orientation === -90) {
-        alert("Gire o dispositivo para o modo paisagem.");
-      }
-      });
+        function forceLandscape() 
+        {
+            if (screen.orientation && screen.orientation.lock) 
+            {
+            // Verifica se a função de bloqueio de orientação está disponível
+                screen.orientation.lock('landscape-primary').catch(function(error) {
+                console.error('Não foi possível forçar a orientação para paisagem:', error);
+                });
+            }
+        }
+
+// Chama a função para forçar a orientação para paisagem
+forceLandscape();
 
         var meta = document.createElement('meta');
         meta.name = 'viewport';
